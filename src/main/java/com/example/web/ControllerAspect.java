@@ -19,7 +19,7 @@ import com.example.services.AdminFacade;
 public class ControllerAspect {
 //
 	@Autowired
-	private Map<String, OurSession> sessions;
+	private Map<String, Session> sessions;
 
 	//// U can activate these 2 aop's instead of checkSession() in each Controller
 	

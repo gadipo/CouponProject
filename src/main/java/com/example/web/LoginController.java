@@ -21,14 +21,14 @@ import com.example.login.LoginManager;
 import com.example.services.ClientFacade;
 
 @RestController
+@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:8080"})
 @RequestMapping("login")
-//@CrossOrigin(origins = "http://localhost:4200")
 public class LoginController {
 
 	private LoginManager manager;
 
 	@Autowired
-	private Map<String, OurSession> sessions;
+	private Map<String, Session> sessions;
 
 	public LoginController(LoginManager manager) {
 		super();
@@ -38,6 +38,7 @@ public class LoginController {
 	// receives user details from client side, authenticates it, produces a unique
 	// token and couples it with the corresponding client facade, saves it into a
 	// map and sends back the token to user upon success.
+//	@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:8080"})
 	@GetMapping("{email}/{password}/{type}")
 	public ResponseEntity<?> login(@PathVariable String email, @PathVariable String password,
 			@PathVariable ClientType type) {
@@ -46,7 +47,7 @@ public class LoginController {
 			ClientFacade facade = manager.Login(email, password, type);
 			String token = UUID.randomUUID().toString();
 			// couples unique token with the right facade and saves them into a global map. this is called a session.
-			sessions.put(token, new OurSession(facade, System.currentTimeMillis()));
+			sessions.put(token, new Session(facade, System.currentTimeMillis()));
 			// returns the unique token to user. In the client side this token will be saved in the sessionStorage using ts.
 			return ResponseEntity.ok(token);
 		} catch (LoginException | SQLException | BeanNotFoundException e) {

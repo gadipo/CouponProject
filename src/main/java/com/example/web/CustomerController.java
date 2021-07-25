@@ -26,12 +26,13 @@ import com.example.services.CompanyFacade;
 import com.example.services.CustomerFacade;
 
 @RestController
+@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:8080"})
 @RequestMapping("customer")
 //@CrossOrigin(origins = "http://localhost:4200")
 public class CustomerController {
 
 	@Autowired
-	private Map<String, OurSession> sessions;
+	private Map<String, Session> sessions;
 
 	@Autowired
 	CompanyFacade comF;
@@ -116,8 +117,8 @@ public class CustomerController {
 	// upon success, returns the validated session with a timestamp.
 	// this test will be used in every controller method to validate if user is
 	// logged in and active using the token he received upon login.
-	public OurSession checkSession(String token) throws NoSessionFoundException, SessionTimeOutException {
-		OurSession session = sessions.get(token);
+	public Session checkSession(String token) throws NoSessionFoundException, SessionTimeOutException {
+		Session session = sessions.get(token);
 		if (session == null) {
 			throw new NoSessionFoundException();
 		}

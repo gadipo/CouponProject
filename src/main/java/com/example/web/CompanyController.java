@@ -1,8 +1,11 @@
 package com.example.web;
 
+import java.sql.DataTruncation;
 import java.sql.SQLException;
 import java.util.Map;
 
+import org.hibernate.HibernateException;
+import org.hibernate.exception.DataException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,12 +32,13 @@ import com.example.services.AdminFacade;
 import com.example.services.CompanyFacade;
 
 @RestController
+@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:8080"})
 @RequestMapping("company")
 //@CrossOrigin(origins = "http://localhost:4200")
 public class CompanyController {
 
 	@Autowired
-	private Map<String, OurSession> sessions;
+	private Map<String, Session> sessions;
 
 	// receives a coupon object from client and adds it to DB using facade. return a message of success/failure.
 	@PostMapping("addCoupon/{token}")
@@ -43,10 +47,11 @@ public class CompanyController {
 			CompanyFacade company = (CompanyFacade) checkSession(token).getFacade();
 			company.addCoupon(coupon);
 			return ResponseEntity.ok(coupon.getTitle() + " was added successfully !");
-		} catch (Exception e) {
+		}  catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 		}
-	}
+		}
+	
 	
 	// receives a coupon object from client and updates it in DB using facade. return a message of success/failure.
 	@PutMapping("updateCoupon/{token}")
@@ -55,7 +60,8 @@ public class CompanyController {
 			CompanyFacade company = (CompanyFacade) checkSession(token).getFacade();
 			company.updateCoupon(coupon);
 			return ResponseEntity.ok(coupon.getTitle() + " was updated successfully !");
-		} catch (Exception e) {
+		} 
+		catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 		}
 	}
@@ -83,6 +89,7 @@ public class CompanyController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 		}
 	}
+	
 
 	// returns all the company coupons that match the category given by user, in failure returns a message .
 	@GetMapping("getCouponsByCategory/{category}/{token}")
@@ -134,8 +141,8 @@ public class CompanyController {
 	// upon success, returns the validated session with a timestamp.
 	// this test will be used in every controller method to validate if user is
 	// logged in and active using the token he received upon login.
-	public OurSession checkSession(String token) throws NoSessionFoundException, SessionTimeOutException {
-		OurSession session = sessions.get(token);
+	public Session checkSession(String token) throws NoSessionFoundException, SessionTimeOutException {
+		Session session = sessions.get(token);
 		if (session == null || !(session.getFacade() instanceof CompanyFacade)) {// u can add a check to see if the
 																					// facade received in session is
 																					// actually companyFacade

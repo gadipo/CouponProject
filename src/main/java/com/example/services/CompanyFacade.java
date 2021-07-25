@@ -1,9 +1,12 @@
 package com.example.services;
 
+import java.sql.DataTruncation;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.HibernateException;
+import org.hibernate.exception.DataException;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
@@ -57,7 +60,9 @@ public class CompanyFacade extends ClientFacade {
 		List<Coupon> coupons = getCompanyCoupons();
 		// in order to check for taken title names by other coupons, we remove the
 		// received coupon from the company's coupon list, and only then run through it.
+		System.out.println(coupons);
 		coupons.remove(coupon);
+		System.out.println(coupons);
 		for (Coupon c : coupons) {
 			if (c.getTitle().equalsIgnoreCase(coupon.getTitle())) {
 				throw new CouponNameException();
@@ -114,5 +119,6 @@ public class CompanyFacade extends ClientFacade {
 		return compDB.findById(this.companyId).orElseThrow(BeanNotFoundException::new);
 		
 	}
+	
 
 }

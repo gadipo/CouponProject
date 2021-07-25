@@ -162,7 +162,8 @@ public class Coupon {
 		}
 		return false;
 	}
-
+	
+	// if you override equals you have to override hashcode. they are linked
 	@Override
 	public int hashCode() {
 		return (int) id + title.hashCode();

@@ -13,13 +13,13 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 
-@Configuration
+@Configuration // does this annotation make spring able to identify these beans easily? by name ?
 @EnableSwagger2
 public class WebConfig {
 
 	@Bean // bean is by default a singleton - thats why you can access 'sessions' from anywhere and it will be the same sessions.
-	public Map<String, OurSession > sessions(){
-		return new HashMap<String, OurSession>();
+	public Map<String, Session > sessions(){
+		return new HashMap<String, Session>();
 	}
 	
 	@Bean

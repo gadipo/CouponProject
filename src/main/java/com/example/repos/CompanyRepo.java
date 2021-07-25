@@ -1,8 +1,10 @@
 package com.example.repos;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import com.example.beans.Company;
 
@@ -17,6 +19,7 @@ public interface CompanyRepo extends JpaRepository<Company, Integer> {
 
 //	@Query("select c.coupons from company c where c.category= :minId")
 //	double courseDurationAverage(int minId);
+
 	
 	
 }

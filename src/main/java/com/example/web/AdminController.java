@@ -1,7 +1,5 @@
 package com.example.web;
 
-import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
@@ -20,20 +18,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.beans.Company;
 import com.example.beans.Customer;
-import com.example.exceptions.AddCompanyException;
-import com.example.exceptions.BeanNotFoundException;
 import com.example.exceptions.NoSessionFoundException;
 import com.example.exceptions.SessionTimeOutException;
-import com.example.exceptions.UpdateCompanyException;
 import com.example.services.AdminFacade;
 
 @RestController
+@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:8080"})
 @RequestMapping("admin")
-//@CrossOrigin(origins = "http://localhost:4200")
 public class AdminController {
 
 	@Autowired
-	private Map<String, OurSession> sessions;
+	private Map<String, Session> sessions;
 
 	// receives a company object from client and adds it to DB using facade. return a message of success/failure.
 	@PostMapping("addCompany/{token}")
@@ -172,7 +167,7 @@ public class AdminController {
 	@GetMapping("getCustomerByEmail/{email}/{token}")
 	public ResponseEntity<?> getOneCustomer(@PathVariable String email, @PathVariable String token) {
 		try {
-			AdminFacade admin = (AdminFacade) checkSession(token).getFacade();
+			AdminFacade admin =  (AdminFacade) checkSession(token).getFacade();
 			return ResponseEntity.ok(admin.getOneCustomer(email));
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
@@ -185,8 +180,8 @@ public class AdminController {
 	// returns the validated session with a timestamp.
 	// this test will be used in every controller method to validate if user is
 	// logged in and active using the token he received upon login.
-	public OurSession checkSession(String token) throws NoSessionFoundException, SessionTimeOutException {
-		OurSession session = sessions.get(token);
+	public Session checkSession(String token) throws NoSessionFoundException, SessionTimeOutException {
+		Session session = sessions.get(token);
 		if (session == null) {
 			throw new NoSessionFoundException();
 		}
