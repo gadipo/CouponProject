@@ -1,21 +1,16 @@
 package com.example.services;
 
-import java.sql.DataTruncation;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.HibernateException;
-import org.hibernate.exception.DataException;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import com.example.beans.Category;
 import com.example.beans.Company;
 import com.example.beans.Coupon;
-import com.example.beans.Customer;
 import com.example.exceptions.BeanNotFoundException;
-import com.example.exceptions.CoupIdNotFoundException;
 import com.example.exceptions.CouponNameException;
 import com.example.exceptions.LoginException;
 

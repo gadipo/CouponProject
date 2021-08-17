@@ -148,10 +148,12 @@ public class Coupon {
 				+ amount + ", price=" + price + ", image=" + image + "]";
 	}
 
-	// receives an object, checks if its from a coupon class, and only then checks
-	// if it has the same unique id, as the coupon its being compared to.
-	// if it passes these 2 tests returns true meaning it is in fact the same object.
-	// if it fails 1 of the tests, returns false, meaning its not the same object.
+	 /*
+	 receives an object, checks if its from a coupon class, and only then checks
+	 if it has the same unique id, as the coupon its being compared to.
+	 if it passes these 2 tests returns true, meaning it is in fact the same object.
+	 if it fails 1 of the tests, returns false, meaning its not the same object. 
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof Coupon) {

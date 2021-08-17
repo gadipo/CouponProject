@@ -34,7 +34,6 @@ import com.example.services.CompanyFacade;
 @RestController
 @CrossOrigin(origins = {"http://localhost:4200", "http://localhost:8080"})
 @RequestMapping("company")
-//@CrossOrigin(origins = "http://localhost:4200")
 public class CompanyController {
 
 	@Autowired
