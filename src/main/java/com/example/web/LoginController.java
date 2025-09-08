@@ -38,7 +38,6 @@ public class LoginController {
 	// receives user details from client side, authenticates it, produces a unique
 	// token and couples it with the corresponding client facade, saves it into a
 	// map and sends back the token to user upon success.
-//	@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:8080"})
 	@GetMapping("{email}/{password}/{type}")
 	public ResponseEntity<?> login(@PathVariable String email, @PathVariable String password,
 			@PathVariable ClientType type) {
